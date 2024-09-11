@@ -1,0 +1,164 @@
+.three-side{
+    display: flex;
+    max-width: 100%;
+}
+@media screen and (max-width: 768px) {
+   .three-side{
+      display: contents;
+      max-width: 100%;
+  }
+}
+.alert-danger{
+ 
+}
+
+.item-detail{
+   width: 50%;
+}
+@media screen and (max-width: 768px) {
+   .item-detail{
+      width: 90%;
+   }
+}
+.detail-side{
+    display: flex;
+   justify-content: left;
+   margin-bottom: 3%;
+}
+.item-img{
+    width: 50%;
+    height: 70%;
+    margin-left: 5%;
+    margin-top: 5%;
+    object-fit: cover;
+ }
+ .item-photo{
+    width: 80%;
+    height: 80%;
+    
+ }
+ .item-name{
+   margin-top: 5%;
+ }
+ .item-confirm{
+    width: 50%;
+    margin-left: 4%;
+    margin-top: 4%;
+ }
+ @media screen and (max-width: 768px) {
+   .item-confirm{
+      width: 80%;
+   }
+ }
+ .confirm{
+    border: 1px solid black;
+    width: 80%;
+    height: 25rem;
+    
+ }
+ .tr{
+    padding: 5%;    /*四角内要素の間隔*/
+    display: flex;
+    justify-content: space-between;
+ }
+ .confirm-th{
+    
+ }
+ .confirm-td{
+   margin-right: auto;
+   margin-left: auto;
+   text-align: center;
+ }
+ .input-se{
+   text-align: center;
+   border: none;
+ }
+ @media screen and (max-width: 768px) {
+   .confirm{
+      width: 100%;
+   }
+ }
+ @media screen and (max-width: 768px) {
+   .buy-submit{
+      text-align: center;
+   }  
+ }
+ 
+ .ml-4{
+    color: white;
+    background-color: lightcoral;
+    width: 80%;
+    height: 3.5em;
+    margin-top: 5%;
+ }
+ .stripe{
+  display: block;
+ }
+ @media screen and (max-width: 768px) {
+   .stripe{
+      margin-left: 7%;
+   }  
+ }
+
+ .how-stripe{
+   display: flex;
+   width: 100%;
+ }
+ .change-cache{
+   margin-left: 30%;
+   margin-top: 3%;
+ }
+ .where{
+   display: flex;
+   width: 100%;
+   margin-top: 6em;
+ }
+ .change-address{
+   margin-left: 40%;
+   margin-top: 3%;
+ }
+
+ /*モーダルウィンドウ　支払方法設定*/
+ .review-modal{
+   display: none;
+}
+.review-modal:target{
+   position: absolute;
+   left: 0;
+   top: 0;
+   width: 100%;
+   height: 100%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+.review-modal .modal-content{
+   width: 35rem;
+   height: 35rem;
+   position: relative;
+   padding: 1.5em;
+   background-color: white;
+   border: 1px solid black;
+   overflow-y: scroll;    /*レビュー表示　スクロールバー*/
+}
+.review-modal .close{
+   position: relative;
+   display: block;
+}
+.review-modal .close::after{
+   position: absolute;
+   display: flex;
+   align-items: center;
+   color: white;
+   cursor: pointer;
+   justify-content: center;
+   width: 2rem;
+   height: 2rem;
+   content: "x";
+}
+.review-modal .close::before{
+   position: fixed;
+   background-color: black;
+   width: 100%;
+   height: 100%;
+}

@@ -1,0 +1,75 @@
+/*ヘッダー全体*/
+.header{
+    display: flex;
+    background-color: black;
+    justify-content: space-between;
+}
+   
+
+.header-logo{
+    width: 35%;
+    height: 3rem;
+    padding: 0.5rem 1rem;
+}
+.header-logo-w{
+    width: 90%;
+    
+}
+@media screen and (max-width: 768px) {
+    .header-logo-w{
+        height: 30px;
+    }
+}
+.port{
+    width: 10%
+}
+.link{
+    color: white;
+}
+@media screen and (max-width: 768px) {
+   .port{
+    width: 8%;
+    margin: 0.5em;
+   }
+}
+/*出品ボタン*/
+.sell-port{
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 10%;
+}
+.warp-sell{
+    color: black;
+    background-color: white;
+    border-radius: 0.3rem;
+    padding: 0.5rem 1rem;
+}
+@media screen and (max-width: 768px) {
+    .warp-sell{
+        padding: 0.2rem 0.5rem;
+    }
+}
+.search-form{
+    width: 48%;
+}
+.search-text{
+    padding: 1rem 0.5rem;
+}
+.text-field{
+    width: 30rem;
+    height: 3em;
+}
+@media screen and (max-width: 768px) {
+    .text-field{
+        width: 15rem;
+    }
+}
+.back-button{
+    width: 6em;
+    height: 3em;
+  }
+@media screen and (max-width: 768px) {
+    .back-button{
+        width: 5rem;
+    }
+}

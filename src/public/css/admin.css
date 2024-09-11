@@ -1,0 +1,9 @@
+.admin{
+    margin-left: auto;
+    margin-right: auto;
+}
+.all-users{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}

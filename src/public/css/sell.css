@@ -1,0 +1,100 @@
+.main{
+    text-align: center;
+}
+.content{
+    text-align: center;
+    width: 100%;
+}
+.sell-form{
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+/*商品画像*/
+.item-photo{
+    width: 180px;
+    height: 180px;
+}
+.user-input-image{
+    border: solid 1px black;
+    width: 45%;
+   
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+}
+.select-photo{
+   
+}
+.user-input{
+    text-align: center;
+    width: 100%;
+}
+.content-ex{
+    text-align: left;
+    width: 40%;
+    display: inline-block; /*これがないとlabelタグにcssが機能しない*/
+}
+/*入力欄*/
+.sell-input-form{
+    width: 40%;
+    height: 3em;
+}
+.sell-input-form1{
+    width: 40%;
+    height: 3em;
+}
+/*小タイトル*/
+.input-colum{
+   align-items: center;
+    width: 100%;
+}
+.input-title-logo{
+    border-bottom:solid 1px black;
+    width: 40%;
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/*画像を選択するボタン*/
+.link-button{
+    color: red;
+    background-color: white;
+    border: 1px solid red;
+    width: 16rem;
+    height: 3em;
+    margin-left: 2em;
+}
+.link-button::file-selector-button {
+    color: red;
+    position: relative;
+    opacity: 0;
+}
+/*input type="file"のテキスト「ファイルを選択」を変更*/
+.link-button::before{
+    content: "画像を選択";
+    text-align: center;
+    align-items: center;
+    width: 16rem;
+    height: 3em;
+    display: grid;
+}
+@media screen and (max-width:768px) {
+    .link-button{
+        width: 9em;
+        margin-top: 2em;
+        margin-left: 0%;
+    }
+    .link-button::before{
+        width: 100%;
+        text-align: center; /*「画像を選択」の文字が真ん中になるように*/
+    }
+}
+.ml-5{
+    color: white;
+    background-color: lightcoral;
+    width: 40%;
+    height: 3.5em;
+}

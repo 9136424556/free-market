@@ -1,0 +1,70 @@
+.w-side{
+    display: flex;
+    max-width: 100%; 
+}
+@media screen and (max-width:768px) {
+    .w-side{
+        width: 100%;
+        display: contents;
+    }
+    
+    
+    
+}
+/*左半分*/
+.item-img{
+   width: 50%;
+   margin-left: 5%;
+   margin-top: 5%;
+}
+@media screen and (max-width:768px) {
+   .item-img{
+     width: 100%;
+     margin: 0 auto;
+    } 
+}
+.item-photo{
+   width: 80%;
+   height: 80%;
+}
+@media screen and (max-width:768px) {
+    .item-photo{
+        width: 70%;
+        height: 70%;
+        margin-left: 15%;
+        margin-top: 5%;
+    }
+}
+/*右半分*/
+.item-detail{
+  width: 50%;
+  margin: 0 0 0 auto;
+  margin-top: 5%;
+}
+@media screen and (max-width:768px) {
+    .item-detail{
+        width: 100%;
+        margin-left: 15%;
+    }
+}
+.review-comment{
+    display: flex;
+    padding: 10px;
+    margin-bottom: 3%;
+}
+.review-img{
+    width: 3em;
+    height: 3em;
+    margin-right: 3em;
+}
+.ml-4{
+    color: white;
+    background-color: lightcoral;
+    width: 60%;
+    height: 3.5em;
+ }
+ /*コメント欄*/
+ .text-input{
+    width: 60%;
+    height: 100px;
+ }
