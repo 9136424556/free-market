@@ -45,18 +45,18 @@ http://localhost
 ## ER図
 
 ## 環境構築
-##1 Gitファイルをクローンする
+## 1 Gitファイルをクローンする
 git clone git@github.com:9136424556/free-market
 
-##2 Dokerコンテナを作成する
+## 2 Dokerコンテナを作成する
 docker-compose up -d --build
 
-##3 Laravelパッケージをインストールする
+## 3 Laravelパッケージをインストールする
 docker-compose exec php bash
 でPHPコンテナにログインし
 composer install
 
-##4 .envファイルを作成する
+## 4 .envファイルを作成する
 PHPコンテナにログインした状態で
 cp .env.example .env
 作成した.envファイルの該当欄を下記のように変更
@@ -74,20 +74,20 @@ MAIL_FROM_NAME="${APP_NAME}"
 STRIPE_KEY=stripeで取得した公開キー
 STRIPE_SECRET=stripeで取得したシークレットキー
 
-##5 テーブルの作成
+## 5 テーブルの作成
 docker-compose exec php bash
 でPHPコンテナにログインし(ログインしたままであれば上記コマンドは実行しなくて良いです。)
 php artisan migrate
 
-##6 ダミーデータ作成
+## 6 ダミーデータ作成
 PHPコンテナにログインした状態で
 php artisan db:seed
 
-##7 アプリケーション起動キーの作成
+## 7 アプリケーション起動キーの作成
 PHPコンテナにログインした状態で
 php artisan key:generate
 
-##8 シンボリックリンクの作成
+## 8 シンボリックリンクの作成
 PHPコンテナにログインした状態で
 php artisan storage:link
 
