@@ -3,7 +3,7 @@
 ## 概要
 COACHTECHが提供する独自のフリマアプリケーションです。会員登録なしでも商品の詳細閲覧は可能ですが、
 会員登録していただくと購入、出品、評価コメント投稿、お気に入り追加等の機能をご利用可能になります。
-![coachtech free-market ホーム画面 jpg](https://github.com/user-attachments/assets/83604f0d-e62c-491a-a9b3-d049f4d458a5)
+![coachtech free-market ホーム画面 jpg (2)](https://github.com/user-attachments/assets/0398cafa-9ad3-4d61-b5c5-2463f3c649e6)
 
 ## 作成した目的
 クライアントよりCOACHTECHブランドのアイテムを独自のフリマアプリで出品したいとの要望があったため、
