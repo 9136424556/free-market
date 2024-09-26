@@ -71,4 +71,9 @@ class User extends Authenticatable
         return $this->belongsToMany(Item::class,'sold_items', 'user_id', 'item_id')
          ->withTimestamps();
     }
+
+    public function isAdmin()
+    {
+        return $this->role === 'admin'; // 役割フィールドを使って管理者かどうかを判定
+    }
 }

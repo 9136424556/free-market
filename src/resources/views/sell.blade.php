@@ -13,18 +13,15 @@
     <div class="content">
         <form class="sell-form" action="{{ route('display') }}" method="post" enctype="multipart/form-data">
         @csrf
+        <!--商品画像をアップロード-->
         <div class="user-input-image">
-                <img id="item_img" class="item-photo" src="{{ asset('gray.png') }}" alt="商品画像">
-                <input id="item" class="link-button" name="img_url" multiple="multiple" type="file" value="{{ old('img_url')}}" onChange="changeImage(event)" accept="image/*">
+            <img id="item_img" class="item-photo" src="{{ asset('gray.png') }}" alt="商品画像">
+            <input id="item" class="link-button" name="img_url" multiple="multiple" type="file" value="{{ old('img_url')}}" onChange="changeImage(event)" accept="image/*">
         </div>
-         <!-- エラーがあった場合の画像プレビュー -->
-    @if ($errors->any())
-        @if (session('uploaded_image'))
-            <div>
-                <img id="preview" src="{{ session('uploaded_image') }}" alt="Uploaded Image Preview" style="max-width: 200px;">
-            </div>
-        @endif
-    @endif
+        @error('img_url')
+        {{ $message }}
+        @enderror
+       
 
         <div class="input-colum">
             <h4 class="input-title-logo">商品の詳細</h4>
@@ -38,6 +35,9 @@
                 @endforeach
             </select>
         </div>
+        @error('category')
+        {{ $message }}
+        @enderror
         <div class="user-input">
             <p><label class="content-ex" for="condition">商品の状態</label></p>
             <select class="sell-input-form" id="condition" name="condition_id" type="text" value="">
@@ -47,6 +47,9 @@
                 @endforeach
             </select>
         </div>
+        @error('condition_id')
+        {{ $message }}
+        @enderror
         <div class="input-colum">
             <h4 class="input-title-logo">商品名と説明</h4>
         </div>
@@ -54,23 +57,36 @@
             <p><label class="content-ex" for="name">商品名</label></p>
             <p><input class="sell-input-form" id="name" name="name" type="text" value="{{ old('name') }}"></p>
         </div>
+        @error('name')
+        {{ $message }}
+        @enderror
         <div class="user-input">
            <p><label class="content-ex" for="description">商品の説明</label></p>
            <p><textarea class="sell-input-form" id="description" name="description" type="text" >{{ old('description') }}</textarea></p>
         </div>
+        @error('description')
+        {{ $message }}
+        @enderror
         <div class="input-colum">
             <h4 class="input-title-logo">販売価格</h4>
         </div>
-        
         <div class="user-input">
            <p><label class="content-ex" for="price">販売価格</label></p>
            <p>￥<input class="sell-input-form" id="price" name="price" type="text" pattern="^[+-]?([1-9][0-9]*|0)$" value="{{ old('price') }}"></p>
         </div>
+        @error('price')
+        {{ $message }}
+        @enderror
 
         <div class="submit-button">
             <input type="hidden" name="user_id" value="">
             <button class="ml-5">出品する</button>
         </div>
+        @if ($errors->has('error'))
+           <div class="alert alert-danger">
+              {{ $errors->first('error') }}
+           </div>
+         @endif
       </form>
    </div>
  </div>

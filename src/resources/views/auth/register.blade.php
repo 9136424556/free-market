@@ -18,9 +18,14 @@
             <div class="mt-4">
                 <p class="mt-label"><x-label  for="email" :value="__('メールアドレス')" /></p>
 
-                <p><x-input id="email" class="input-form" type="email" name="email" :value="old('email')" required /></p>
+                <p><x-input id="email" class="input-form" type="email" name="email" :value="old('email')" /></p>
             </div>
-
+            
+               @error('email')
+                 {{ $message }}
+               @enderror
+           
+         
             <!-- Password -->
             <div class="mt-4">
                 <p class="mt-label"><x-label for="password" :value="__('パスワード')" /></p>
@@ -28,8 +33,12 @@
                 <p><x-input id="password" class="input-form"
                                 type="password"
                                 name="password"
-                                required autocomplete="new-password" /></p>
+                                autocomplete="new-password" /></p>
             </div>
+            
+               @error('password')
+                 {{ $message }}
+               @enderror
 
             <div class="mt-4">
                 <x-button class="ml-4">

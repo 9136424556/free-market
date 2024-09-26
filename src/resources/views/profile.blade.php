@@ -16,6 +16,9 @@
 @section('main')
 <div class="main">
   <div class="main-content">
+    <div class="back">
+       <a href="/mypage"><button class="back-button" type="button"><</button></a>
+    </div>
     <div class="title">
         <h1>プロフィール設定</h1>
     </div>
@@ -61,6 +64,11 @@
            <p><label for="building">建物名</label></p>
            <p><input class="input-form" id="building" name="building" type="text" value="{{ old('building', $user->profile->building ?? '') }}"></p>
         </div>
+        <div class="user-input">
+            <p><label for="introduction">プロフィール文</label></p>
+            <p><textarea class="input-form" id="introduction" name="introduction" type="text" >{{ old('introduction', $user->introduction ?? '') }}</textarea></p>
+        </div>
+
         <div class="submit-button">
             <input type="hidden" name="user_id" value="">
             <button type="submit" class="ml-4">{{ $profile ? '更新する' : '作成する' }}</button>

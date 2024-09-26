@@ -27,9 +27,9 @@ class Item extends Model
        return $this->belongsTo(Condition::class);
     }
 
-    public function category()
+    public function categories()
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsToMany(Category::class,'category_items');
     }
 
     public function likes()
@@ -37,9 +37,9 @@ class Item extends Model
         return $this->hasMany(Like::class);
     }
 
-    public function users()
+    public function user()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function comment()

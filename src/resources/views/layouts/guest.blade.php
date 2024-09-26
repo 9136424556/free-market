@@ -14,8 +14,7 @@
         <link rel="stylesheet" href="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.css">
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
-        <script src="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.js"></script>
-        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         @yield('css')
     </head>
 

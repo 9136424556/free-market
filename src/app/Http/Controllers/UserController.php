@@ -51,6 +51,9 @@ class UserController extends Controller
     //プロフィール作成
     public function storeprofile(MypageRequest $request )
     {
+        $request->validate([
+            'img_url' => 'image|mimes:svg,jpg|max:2048',
+        ]);
         //画像を選択した場合のみ起動する処理
         if($request->img_url) {
         //画像をストレージに保存して表示
@@ -65,6 +68,7 @@ class UserController extends Controller
 
             $user = Auth::user();
             $user->name = $request->input('name');
+            $user->introduction = $request->input('introduction');
             $user->save();
           
             $input = new Profile();
@@ -79,8 +83,13 @@ class UserController extends Controller
         return redirect('/mypage');
     }
     //プロフィール変更
-    public function changeprofile(MypageRequest $request)
+    public function changeprofile(Request $request, $id)
     {
+        $validatedData = $request->validate([
+            'img_url' => 'image|mimes:svg,jpg|max:2048',
+            'postcode' => 'required|max:8',
+            'address' => 'required|string'
+        ]);
         //画像をストレージに保存して表示
         if($request->img_url) {
         $dir = 'image';
@@ -94,36 +103,22 @@ class UserController extends Controller
        //名前変更処理
         $user = Auth::user();
         $user->name = $request->input('name');
+        $user->introduction = $request->input('introduction');
         $user->update();
        //住所・郵便番号変更処理
-        $change = $request->only('postcode','address','building');
-
-        Profile::find(Auth::id())->update($change);
-
+       
+       $profile =  Profile::findOrFail($id);
+       Auth::user()->profile->update($validatedData);
+       
         return redirect('/mypage')->with('message','プロフィールを更新しました');
     }
 
-    public function storeAddress(MypageRequest $request, $item_id)
-    {
-        $item = Item::find($item_id);
-
-        $input = new Profile();
-        $input->postcode = $request->input('postcode');
-        $input->address = $request->input('address');
-        $input->building = $request->input('building');
-        $input->user_id = Auth::id();
-            
-        $input->save();
-
-        return redirect()->route('buy',['item_id' => $item->id ]);
-    }
     //購入ページー＞住所変更処理
     public function changeAddress(Request $request ,$item_id)
     {
-        
         $item = Item::find($item_id);
         $change = $request->only('postcode','address','building','user_id');
-        Profile::find(Auth::id())->update($change);
+        Auth::user()->profile->update($change);
        
         return redirect()->route('buy',['item_id' => $item->id ]);
     }

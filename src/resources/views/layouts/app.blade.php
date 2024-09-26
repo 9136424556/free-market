@@ -12,7 +12,8 @@
         <link rel="stylesheet" href="{{ asset('css/app.css') }}"/>
         <link rel="stylesheet" href="{{ asset('css/reset.css') }}"/>
         <!-- Scripts -->
-        <script src="{{ asset('js/app.js') }}" defer></script>
+        <script src="http://localhost/js/app.js" defer></script>
+        <script src="https://js.stripe.com/v3/"></script>
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         @yield('css')
@@ -22,7 +23,7 @@
     <body class="">
         <header class="head">
             
-
+            
             <!-- Page Heading -->
             <div class="header">
                 <div class="header-logo">
@@ -46,7 +47,7 @@
                 <!--ユーザーが管理者の場合のみ表示する-->
                 @if(isset($user) && $user['role'] == 'admin')
                 <div class="port">
-                   <p><a class="link" href="{{ route('adminIndex') }}">管理者画面</a></p>
+                   <p><a class="link" href="{{ route('admin') }}">管理者画面</a></p>
                 </div>
                 @endif
                 <div class="sell-port">

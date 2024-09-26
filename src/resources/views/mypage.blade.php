@@ -17,9 +17,9 @@
         <div class="user-input-content">
             <div class="icon">
                 @if($user->img_url === null)
-                <img src="{{ asset('noimage.png') }}" alt="" class="profile-icon">
+                <img src="{{ asset('noimage.png') }}" alt="プロフィールアイコン未設定表示" class="profile-icon">
                 @else
-                <img class="profile-icon" src="{{ asset($user->img_url) }}" alt="">
+                <img class="profile-icon" src="{{ asset($user->img_url) }}" alt="プロフィールアイコン">
                 @endif
             </div>
 
@@ -33,12 +33,19 @@
               @endif
             @endif
            </div>
-
+           
+           @if(Auth::check())
            <div class="link-profile">
                 <button class="link-button-profile"><a class="page-link-1" href="/mypage/profile">プロフィールを編集</a></button>
            </div>
+           @endif
 
         </div>
+       
+        <div class="profile-text">
+           <p class="introduction">{{ $user->introduction }}</p>
+        </div>
+       
 
         <div class="mypage-content">
           <div class="link-tag">
@@ -50,7 +57,7 @@
               @foreach($user->items as $item)
                <div class="item">
                 <div class="item-image">
-                    <a href="{!! '/item/' . $item->id !!}"><img class="item-img" src="{{ $item->img_url }}" alt="店舗写真"></a>
+                    <a href="{!! '/item/' . $item->id !!}"><img class="item-img" src="{{ $item->img_url }}" alt="商品画像"></a>
                 </div>
                </div>
               @endforeach
@@ -62,7 +69,7 @@
               @foreach($solds as $sold)
                <div class="item">
                 <div class="item-image">                <!--sold_itemsテーブルから購入した商品を表示 ↓-->
-                    <a href="{!! '/item/' . $sold->item->id !!}"><img class="item-img" src="{{ $sold->item->img_url }}" alt="店舗写真"></a>
+                    <a href="{!! '/item/' . $sold->item->id !!}"><img class="item-img" src="{{ $sold->item->img_url }}" alt="商品画像"></a>
                 </div>
                </div>
               @endforeach

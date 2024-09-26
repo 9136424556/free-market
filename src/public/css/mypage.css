@@ -37,6 +37,17 @@
         width: 9em;
     }
 }
+/*自己紹介文*/
+.profile-text{
+    margin-top: 3%;
+    margin-left: 25%;
+    width: 50%;
+}
+@media screen and (max-width:768px) {
+    .profile-text{
+        width: 60%;
+    }
+}
 .page-link-1{
     color: red ;
     border: red;
@@ -88,7 +99,7 @@
     height: 3em;
  }
  .submit-button{
-    
+    margin-bottom: 5%;
  }
 .ml-4{
     color: white;
@@ -184,4 +195,7 @@
 .item-img{
     width: 100%;
     height: 100%;
+}
+.back{
+    text-align: left;
 }

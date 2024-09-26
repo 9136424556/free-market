@@ -2,8 +2,77 @@
     margin-left: auto;
     margin-right: auto;
 }
+
+/*テーブル全体*/
 .all-users{
     width: 100%;
+    text-align: center;
+   
+}
+@media screen and (max-width:768px) {
+    .all-users{
+        width:100%;
+    }
+}
+.tr-content{
     display: flex;
+    padding-right: 10%;
+    width: 100%;
+    margin-top: 5%;
     justify-content: space-between;
+}
+/*メール送信フォーム*/
+.mail-send{
+    display: block;
+    width: 30em;
+    
+}
+@media screen and (max-width:768px) {
+    .mail-send{
+        width:100%;
+    }
+}
+
+.th-content{
+    flex-wrap: wrap;
+    width: 15%;
+    justify-content: space-between;
+}
+
+.mail{
+    width: 90%;
+}
+.delete{
+    color: white;
+    background-color: lightcoral;
+    width: 5em;
+    height: 3.5em;
+}
+.input-address{
+    width: 20em;
+}
+@media screen and (max-width:768px) {
+    .input-address{
+        width: 8em;
+    }
+}
+.input-message{
+    width: 20em;
+    height: 6em;
+}
+@media screen and (max-width:768px) {
+    .input-message{
+        width: 8em;
+    }
+}
+.send{
+    color: white;
+    background-color: blue;
+    width: 5em;
+    height: 3.5em;
+}
+@media screen and (max-width:768px) {
+    .send{
+        text-align: center;
+    }
 }

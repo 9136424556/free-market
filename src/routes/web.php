@@ -20,14 +20,22 @@ use App\Http\Controllers\AdminController;
 
 Route::get('/', [ItemController::class, 'index'])->name('index');
 Route::get('/item/{item_id}', [ItemController::class, 'detail'])->name('detail');
+Route::get('/search', [ItemController::class, 'search'])->name('search.item');
 
 Route::get('/sell', [SellController::class, 'sell'])->name('sell');
 Route::post('/sell/store', [SellController::class, 'itemstore'])->name('display');
 
-Route::prefix('admin')->middleware('verified:admin')->group(function() {
-    Route::get('/index', [AdminController::class, 'index'])->name('adminIndex');
+Route::prefix('admin')->middleware(['auth.admin'])->group(function() {
+    Route::get('/index', [AdminController::class, 'index'])->name('admin');
+    Route::get('/detail/{id}', [AdminController::class, 'detail'])->name('userdetail');
+    /*ユーザーを削除*/
     Route::post('/delete',[AdminController::class, 'userDelete']);
+    Route::post('/item/delete',[AdminController::class, 'deleteItem']);
+    Route::post('/comment/delete',[AdminController::class, 'deleteComment']);
+    /*メール送信処理*/
+    Route::post('/send-Email', [AdminController::class, 'sendEmail'])->name('sendEmail');
 });
+
 
 
 Route::get('/dashboard', function () {

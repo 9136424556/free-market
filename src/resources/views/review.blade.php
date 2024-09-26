@@ -26,23 +26,19 @@
             <h1>{{ $item->name }}</h1>
             <h3>￥{{ $item->price }}</h3>
             <div class="review-comment">
-              @if(Auth::check())
-              @if($likes->where("user_id", "=", "$user->id")->where("item_id", "=", "$item->id")->first())
-              <form action="{{ route('unlike', ['item_id' => $item->id]) }}" method="post">
+               @if($likes->where("user_id", "=", "$user->id")->where("item_id", "=", "$item->id")->first())
+               <form action="{{ route('unlike', ['item_id' => $item->id]) }}" method="post">
                 @csrf
-                <input class="review-img" type="image" src="{{ asset('image/star2.png') }}" alt="">
-              </form>
-              @else
-              <form action="{{ route('like', ['item_id' => $item->id] ) }}" method="post">
+                  <input class="review-img" type="image" src="{{ asset('image/star2.jpg') }}" alt="お気に入り取り消しアイコン">
+               </form>
+               @else
+               <form action="{{ route('like', ['item_id' => $item->id] ) }}" method="post">
                 @csrf
-                <input class="review-img" type="image" src="{{ asset('image/staricon.png') }}" alt="">
-              </form>
-              @endif
-              @else
-              <img class="review-img" src="{{ asset('image/staricon.png') }}" alt="">
-              @endif
+                 <input class="review-img" type="image" src="{{ asset('image/staricon.jpg') }}" alt="お気に入り追加アイコン">
+               </form>
+               @endif
               <!--レビューアイコン-->
-              <img class="review-img" src="{{ asset('image/comment.png') }}" alt="戻る">
+              <img class="review-img" src="{{ asset('image/comment.jpg') }}" alt="レビュー投稿アイコン">
             </div>
             <div class="comment">
                 <form class="comment-upload" action="/item/review/create" method="post">

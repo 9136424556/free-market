@@ -25,8 +25,10 @@
     @endif
     </div>
 
+   
+
     <div class="item-img">
-       <img class="item-photo" src="{{ asset($item->img_url) }}" alt="">
+       <img class="item-photo" src="{{ asset($item->img_url) }}" alt="商品画像">
     </div>
     <div class="item-detail">
         <div class="item-name">
@@ -38,19 +40,19 @@
               @if($likes->where("user_id", "=", "$user->id")->where("item_id", "=", "$item->id")->first())
               <form action="{{ route('unlike', ['item_id' => $item->id]) }}" method="post">
                 @csrf
-                <input class="review-img" type="image" src="{{ asset('image/star2.png') }}" alt="">
+                <input class="review-img" type="image" src="{{ asset('image/star2.jpg') }}" alt="お気に入り取り消しアイコン">
               </form>
               @else
               <form action="{{ route('like', ['item_id' => $item->id] ) }}" method="post">
                 @csrf
-                <input class="review-img" type="image" src="{{ asset('image/staricon.png') }}" alt="">
+                <input class="review-img" type="image" src="{{ asset('image/staricon.jpg') }}" alt="お気に入り追加アイコン">
               </form>
               @endif
               @else
-              <img class="review-img" src="{{ asset('image/staricon.png') }}" alt="">
+              <img class="review-img" src="{{ asset('image/staricon.jpg') }}" alt="お気に入り追加アイコン">
               @endif
               <!--レビューアイコン-->
-              <a href="#review" type="button" ><img class="review-img" src="{{ asset('image/comment.png') }}" alt=""></a>
+              <a href="#review" type="button" ><img class="review-img" src="{{ asset('image/comment.jpg') }}" alt="レビュー投稿アイコン"></a>
             </div>
            
             
@@ -63,7 +65,9 @@
             <button class="ml-4">出品した商品のため購入できません</button>
             @elseif(!$sold) <!-- 商品が購入されていない場合の処理 -->
             <a href="{!! '/purchase/' . $item->id  !!}"><button class="ml-4">購入する</button></a>
-            @else <!--商品が購入済みの場合-->
+            @elseif($sold && $sold->user_id == $user->id)  <!--商品を購入したユーザーの場合-->
+            <a href="{!! '/purchase/' . $item->id  !!}"><button class="ml-4">購入詳細</button></a>
+            @else  <!--商品が購入済みの場合-->
             <button class="ml-4">購入済み</button>
             @endif
             @endif
@@ -87,6 +91,20 @@
             <h4>カテゴリー</h4>
             <p class="it-other-1">{{ $category_item->category->name }}</p>
           </div>
+        </div>
+        <div class="item-other">
+          <h1>出品者情報</h1>
+          <div class="item-condition">
+            @if($sell->user->name == null)
+            <h4 class="it-other-1">名無しのユーザー</h4>
+            @else
+            <h4 class="it-other-1">{{ $sell->user->name }}</h4>
+            @endif
+          </div>
+          <div class="item-condition">
+            <p class="it-other-1">{{ $sell->user->introduction }}</p>
+          </div>
+          
         </div>
     </div>
   </div>

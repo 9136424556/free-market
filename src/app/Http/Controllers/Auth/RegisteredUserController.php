@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
+use App\Http\Requests\Auth\RegisterRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
@@ -33,7 +34,7 @@ class RegisteredUserController extends Controller
      * @throws \Illuminate\Validation\ValidationException
      */
     //会員登録処理
-    public function store(Request $request)
+    public function store(RegisterRequest $request)
     {
         $request->validate([
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],

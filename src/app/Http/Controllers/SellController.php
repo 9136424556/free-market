@@ -30,7 +30,7 @@ class SellController extends Controller
         $request->file('img_url')->storeAs('public/' . $dir, $file_name);
         
         $request->validate([
-            'img_url' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'img_url' => 'required|image|mimes:jpg,svg|max:2048',
         ]);
         if ($request->hasFile('img_url')) {
             $image = $request->file('img_url');
@@ -38,8 +38,7 @@ class SellController extends Controller
     
             // セッションに保存しておく
             session()->flash('uploaded_image', asset('storage/' . $path));
-             // 通常ならここで画像を保存してリダイレクトしますが、ここではバリデーションエラーを意図的に返します
-            return back()->withErrors(['error' => 'Simulated validation error']);
+           
         }
 
 

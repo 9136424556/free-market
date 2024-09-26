@@ -1,0 +1,32 @@
+.all-item-comment{
+    width: 100%;
+    display: flex;
+    max-width: 100%;
+    margin-left: 10%;
+}
+.tr-content-01{
+    padding-right: 10%;
+    width: 50%;
+    margin-top: 5%;
+    display: block;
+}
+.item-title{
+    padding-right: 10%;
+    width: 100%;
+    margin-top: 5%;
+}
+.tr-content-02{
+    width: 50%;
+    display: block;
+}
+
+.th-content-02{
+    display: block;
+    flex-wrap: wrap;
+    width: 15%;
+    justify-content: space-between;
+    
+}
+.set-delete{
+    display: block;
+}

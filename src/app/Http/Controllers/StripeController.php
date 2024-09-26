@@ -3,59 +3,54 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Stripe\Stripe;
-use Stripe\Charge;
-use Stripe\PaymentIntent;
+use Stripe\Webhook;
+use Illuminate\Support\Facades\Log;
 
 class StripeController extends Controller
 {
-    //クレジットカードでの処理
-    public function processPayment(Request $request) 
+   
+    public function handleWebhook(Request $request)
     {
-       Stripe::setApiKey(env('STRIPE_SECRET'));
+        // Webhookのペイロードを取得
+      $payload = $request->getContent();
 
-       $charge = Charge::create([
-        'amount' => $request->input('amount') * 100, // 金額を送信
-        'currency' => 'jpy',
-        'source' => $request->input('stripeToken'), // トークンを使用
-        'description' => '購入アイテムの説明',
-    ]);
-  
-    return redirect()->back()->with('success', '支払いが成功しました');
+       // StripeのWebhookシグネチャを検証（セキュリティ強化）
+       $sig_header = $request->header('Stripe-Signature');
+       $endpoint_secret = env('STRIPE_WEBHOOK_SECRET');
+
+       try {
+           // Stripeのイベントを検証
+           $event = Webhook::constructEvent($payload, $sig_header, $endpoint_secret);
+
+           // イベントの種類ごとに処理を分岐
+           switch ($event->type) {
+               case 'payment_intent.succeeded':
+                   $paymentIntent = $event->data->object; // PaymentIntentのオブジェクト
+                   Log::info('Payment succeeded for PaymentIntent: ' . $paymentIntent->id);
+                   // ここで注文ステータスを更新するなどの処理を追加
+                   break;
+
+               case 'payment_intent.payment_failed':
+                   $paymentIntent = $event->data->object;
+                   Log::error('Payment failed for PaymentIntent: ' . $paymentIntent->id);
+                   break;
+
+               // その他のイベントも追加可能
+               default:
+                   Log::info('Received unknown event type ' . $event->type);
+           }
+       } catch (\Exception $e) {
+           Log::error('Webhook error: ' . $e->getMessage());
+           return response()->json(['error' => 'Webhook error'], 400);
+       }
+
+       return response()->json(['status' => 'success'], 200);
+      
     }
 
-   //銀行振込の場合
-    public function bankTransfer(Request $request)
-{
-    // 振込先の銀行口座情報を表示する
-    return view('bank_transfer', ['bankAccount' => $bankAccount]);
-}
-   // 管理者が入金を確認したら注文を処理する
-    public function processBankPayment(Request $request)
+    public function thanks($orderId)
     {
-        $order = Order::find($request->input('order_id'));
-        $order->status = 'paid';
-        $order->save();
-
-        return back()->with('success', '銀行振込が確認されました。');
-    }
-
-    protected function processConveniencePayment(Request $request)
-    {
-        Stripe::setApiKey(env('STRIPE_SECRET'));
-
-        // 支払いインテントを作成
-        $paymentIntent = PaymentIntent::create([
-            'amount' => $request->input('amount') * 100, // 金額を送信
-            'currency' => 'jpy',
-            'payment_method_types' => ['konbini'], // コンビニ払いを指定
-        ]);
-    
-        // クライアントに支払いインテントの詳細を返す
-        return response()->json([
-            'clientSecret' => $paymentIntent->client_secret,
-        ]);
-
-        return back()->with('success', 'コンビニ払いの指示を送信しました。');
+        $order = Order::findOrFail($orderId);
+        return view('thanks', compact('order'));
     }
 }

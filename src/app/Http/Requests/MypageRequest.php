@@ -24,7 +24,6 @@ class MypageRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => '',
             'postcode' => 'required',
             'address' => 'required',
         ];

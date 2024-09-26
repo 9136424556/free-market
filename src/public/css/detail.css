@@ -29,6 +29,8 @@
 .item-photo{
    width: 80%;
    height: 80%;
+   object-fit: cover; /* 画像の比率を保ちながら切り取る */
+   max-height: 900px; /* 画像の最大高さ */
 }
 @media screen and (max-width:768px) {
     .item-photo{

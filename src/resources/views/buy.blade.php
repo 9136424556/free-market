@@ -13,17 +13,23 @@
 @endsection
 
 @section('main')
+ 
 <div class="main">
+@if(session('message'))
+  <div class="alert-success">
+    <h4>{{ session('message') }}</h4>
+  </div>
+@endif
+
 <div class="three-side">
     <a href="{!! '/item/' . $item->id !!}"><button class="back-button"><</button></a>
-    <div class="alert-danger">
-        
-    </div>
+
+    <div id="payment-error" class="alert-danger" style="color: red; display: none;"></div>
 
     <div class="item-detail">
       <div class="detail-side">
         <div class="item-img">
-          <img class="item-photo" src="{{ asset($item->img_url) }}" alt="">
+          <img class="item-photo" src="{{ asset($item->img_url) }}" alt="商品画像">
         </div>
 
         <div class="item-name">
@@ -32,6 +38,11 @@
         </div>
       </div>
 
+       @php
+          $sold = $soldItems->firstWhere('item_id', $item->id);
+       @endphp
+
+      @if(!$sold)
       <div class="stripe">
         <div class="how-stripe">
             <div>
@@ -47,13 +58,17 @@
             <h1>配送先</h1>
           </div>
           <div class="change-address">
+            @if($profile == null)
+            <a href="/mypage/profile">郵便番号・住所を設定</a>
+            @else
             <a href="{!! '/purchase/address/' . $item->id !!}"><p>配送先を変更</p></a>
+            @endif
           </div>
           
         </div>
         
       </div>
-
+     @endif
     </div>
 
     <div class="item-confirm">
@@ -74,32 +89,32 @@
         </div>
       </div>
       
-     <div id="creditCardForm" style="display: none;">
-            <div class="form-group">
-                <label for="cardNumber">カード番号:</label>
-                <input type="text" class="form-control" id="cardNumber" name="cardNumber" placeholder="1234 5678 9012 3456">
-            </div>
-            <div class="form-group">
-                <label for="expiryDate">有効期限:</label>
-                <input type="text" class="form-control" id="expiryDate" name="expiryDate" placeholder="MM/YY">
-            </div>
-            <div class="form-group">
-                <label for="cvc">CVC:</label>
-                <input type="text" class="form-control" id="cvc" name="cvc" placeholder="123">
-            </div>
-      </div>
-     
+      <div id="card-element" style="display: none;"></div>
+            
+      <div id="card-errors" role="alert"></div>
+      
+      <!--エラーメッセージ-->
+      @if ($errors->any())
+       <div class="error_alert">
+         <ul>
+          @foreach ($errors->all() as $error)
+           <li>{{ $error }}</li>
+          @endforeach
+         </ul>
+       </div>
+       @endif
+      
+      
 
       <div class="buy-submit">
-        <button type="submit" class="ml-4">購入する</button>
+      @if(!$sold)
+        <button id="payment-button" type="submit" class="ml-4">購入する</button>
+      @else
+        <button class="ml-4" type="button">購入済み</button>
+      @endif
       </div>
-       @error('error')
-          {{ $message }}
-          @enderror
-      @error('error')
-      {{ $errors->first('payment_method.required') }}
-      @enderror
-    </form>
+       
+     </form>
     </div>
      
   </div>
@@ -124,17 +139,17 @@
        <h3>支払方法を選択</h3>
 
        <div>
-        <input type="radio" id="credit_card" name="payment_method" value="クレジットカード"  {{ old('payment_method','クレジットカード') == 'クレジットカード' ? 'checked' : '' }} checked/>
+        <input type="radio" id="credit_card" name="payment_method" value="card"  {{ old('payment_method','card') == 'card' ? 'checked' : '' }} checked/>
         <label for="credit_card">クレジットカード</label>
        </div>
 
        <div>
-        <input type="radio" id="konbini" name="payment_method" value="コンビニ払い"  {{ old('payment_method','コンビニ払い') == 'コンビニ払い' ? 'checked' : '' }}>
+        <input type="radio" id="konbini" name="payment_method" value="konbini"  {{ old('payment_method','konbini') == 'konbini' ? 'checked' : '' }}>
         <label for="konbini">コンビニ払い</label>
        </div>
 
        <div>
-        <input type="radio" id="bank" name="payment_method" value="銀行振込"  {{ old('payment_method','銀行振込') == '銀行振込' ? 'checked' : '' }}>
+        <input type="radio" id="bank" name="payment_method" value="bank_transfer"  {{ old('payment_method','bank_transfer') == 'bank_transfer' ? 'checked' : '' }}>
         <label for="bank">銀行振込</label>
        </div>
 
@@ -151,15 +166,14 @@
 <!--決済処理-->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
   $(document).ready(function() {
     // モーダルが表示されたときのイベント
    
       // 支払い方法の選択イベント
       $('input[name="payment_method"]').change(function() {
-        var creditCardForm = $('#creditCardForm');
-        if ($(this).val() === 'クレジットカード') {
+        var creditCardForm = $('#card-element');
+        if ($(this).val() === 'card') {
           creditCardForm.show();
         } else {
           creditCardForm.hide();
@@ -169,10 +183,48 @@
       });
 
         // 初期状態でクレジットカードが選択されている場合にフォームを表示
-    if ($('input[name="payment_method"]:checked').val() === 'クレジットカード') {
-      $('#creditCardForm').show();
+    if ($('input[name="payment_method"]:checked').val() === 'card') {
+      $('#card-element').show();
     }
    });
+</script>
+<script>
+  //クレジットカード、コンビニ払い、銀行振込の決済処理
+      document.addEventListener('DOMContentLoaded', function() {
+        var stripe = Stripe('{{ env('STRIPE_KEY') }}');
+        var elements = stripe.elements({
+          locale: 'ja'  // 日本向けのロケール設定
+        });
+        var cardElement = elements.create('card',{hidePostalCode: true });
+        cardElement.mount('#card-element');
+
+        var form = document.getElementById('payment-form');
+
+        form.addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            // Stripeの決済処理開始
+            const { error, paymentMethod } = await stripe.createPaymentMethod({
+                type: 'card',
+                card: cardElement,
+            });
+
+            if (error) {
+                document.getElementById('card-errors').textContent = error.message;
+                return;
+            }
+
+            // サーバーに送信するためのhidden inputを追加
+            const hiddenInput = document.createElement('input');
+            hiddenInput.setAttribute('type', 'hidden');
+            hiddenInput.setAttribute('name', 'payment_method_id');
+            hiddenInput.setAttribute('value', paymentMethod.id);
+            form.appendChild(hiddenInput);
+
+            // フォームを送信してバックエンドで決済処理を実行
+            form.submit();
+        });
+    });
 </script>
 
 
