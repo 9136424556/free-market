@@ -12,7 +12,7 @@ class StripeController extends Controller
     public function handleWebhook(Request $request)
     {
         // Webhookのペイロードを取得
-      $payload = $request->getContent();
+       $payload = $request->getContent();
 
        // StripeのWebhookシグネチャを検証（セキュリティ強化）
        $sig_header = $request->header('Stripe-Signature');

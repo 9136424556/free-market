@@ -107,8 +107,8 @@ class UserController extends Controller
         $user->update();
        //住所・郵便番号変更処理
        
-       $profile =  Profile::findOrFail($id);
-       Auth::user()->profile->update($validatedData);
+        $profile =  Profile::findOrFail($id);
+        Auth::user()->profile->update($validatedData);
        
         return redirect('/mypage')->with('message','プロフィールを更新しました');
     }

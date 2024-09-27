@@ -46,7 +46,9 @@
 }
 @media screen and (max-width: 768px) {
     .warp-sell{
-        padding: 0.2rem 0.5rem;
+        padding: 0.2rem 0.6rem;
+        writing-mode: vertical-rl;
+        height: 50px;
     }
 }
 .search-form{
