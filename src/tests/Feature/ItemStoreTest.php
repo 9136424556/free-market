@@ -10,6 +10,8 @@ use App\Models\User;
 use App\Models\Category;
 use App\Models\Condition;
 use App\Models\Item;
+use Database\Seeders\CategoriesTableSeeder;
+use Database\Seeders\ConditionsTableSeeder;
 
 class ItemStoreTest extends TestCase
 {
@@ -21,7 +23,8 @@ class ItemStoreTest extends TestCase
         parent::setUp();
 
         // データベースシーディングを実行
-        $this->seed();
+        $this->seed(CategoriesTableSeeder::class);
+        $this->seed(ConditionsTableSeeder::class);
     }
     /** @test */
     public function it_stores_a_new_item_with_image_and_category()
@@ -33,9 +36,9 @@ class ItemStoreTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        // テスト用のカテゴリと状態を作成
-        $category = Category::factory()->create();
-        $condition = Condition::factory()->create();
+        // カテゴリと状態を取得
+        $category = Category::first(); // 最初のカテゴリを取得
+        $condition = Condition::first(); // 最初の状態を取得
 
         // テスト用の画像ファイルを作成
         $file = UploadedFile::fake()->image('test_image.jpg');

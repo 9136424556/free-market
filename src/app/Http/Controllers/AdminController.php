@@ -62,7 +62,7 @@ class AdminController extends Controller
     
        
         $data = [
-            'user_name' => 'ユーザー名', // ここに実際のユーザー名を入れる
+            'user_name' => 'ユーザー名', 
             'message' => $request->input('message'),
         ];
 
