@@ -20,6 +20,7 @@ http://localhost
 ・商品詳細取得機能
 ・商品お気に入り一覧取得機能
 ・商品お気に入り追加、削除機能
+・商品検索機能
 ・ユーザー情報取得機能
 ・ユーザー購入商品一覧取得機能
 ・ユーザー出品商品一覧取得機能
@@ -42,8 +43,12 @@ http://localhost
 ・mysql 15.1 
 
 ## テーブル設計
+![スクリーンショット 2024-09-27 200117](https://github.com/user-attachments/assets/5876ae4f-807e-4630-9e78-9693335c729d)
+![スクリーンショット 2024-09-27 200148](https://github.com/user-attachments/assets/cd9856bc-ec5e-43b6-b9de-4a50141849d5)
+![スクリーンショット 2024-09-27 200159](https://github.com/user-attachments/assets/cbd8222d-4f74-4ac7-99e7-92d0a11e2a3b)
 
 ## ER図
+![coachtech free-market ER図](https://github.com/user-attachments/assets/1aa394e3-86e9-4702-a536-7e5b7d051f3a)
 
 ## 環境構築
 ## 1 Gitファイルをクローンする
