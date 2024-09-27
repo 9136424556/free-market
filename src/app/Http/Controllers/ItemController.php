@@ -182,10 +182,15 @@ class ItemController extends Controller
        }
        $keyword = $request->input('keyword');
 
-       $results = Item::whereHas('categories', function ($query) use ($keyword) {
-          $query->where('name','LIKE', "%{$keyword}%" );
-       })
-       ->orWhere('condition_id', 'LIKE', "%{$keyword}%")
+       $results = Item::where(function ($query) use ($keyword) {
+        $query->where('name', 'LIKE', "%{$keyword}%") // itemsテーブルのnameカラムを参照
+           ->orWhereHas('condition', function ($query) use ($keyword) {
+              $query->where('condition','LIKE', "%{$keyword}%");
+           })
+           ->orWhereHas('categories', function ($query) use ($keyword) {
+              $query->where('name','LIKE', "%{$keyword}%" );
+           });
+        })
        ->get();
 
            // ログインしているユーザー情報を取得
