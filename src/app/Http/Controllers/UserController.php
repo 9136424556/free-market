@@ -27,7 +27,7 @@ class UserController extends Controller
     public function profile()
     {
         $user = User::find(Auth::id());
-        $profile = Profile::find(Auth::id());
+        $profile = Profile::where('user_id', Auth::id())->first();
 
         return view('profile',compact('user','profile'));
     }
@@ -49,7 +49,7 @@ class UserController extends Controller
         return view('address',compact('user','profile','item'));
     }
     //プロフィール作成
-    public function storeprofile(MypageRequest $request )
+    public function storeprofile(MypageRequest $request)
     {
         $request->validate([
             'img_url' => 'image|mimes:svg,jpg|max:2048',

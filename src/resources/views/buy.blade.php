@@ -58,7 +58,7 @@
             <h1>配送先</h1>
           </div>
           <div class="change-address">
-            @if($profile == null)
+            @if($profile === null)
             <a href="/mypage/profile">郵便番号・住所を設定</a>
             @else
             <a href="{!! '/purchase/address/' . $item->id !!}"><p>配送先を変更</p></a>

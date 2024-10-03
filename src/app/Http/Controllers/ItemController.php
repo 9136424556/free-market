@@ -57,7 +57,8 @@ class ItemController extends Controller
         $item = Item::find($item_id);
         $user = User::find(Auth::id());
         $soldItems = Sold_item::get();
-        $profile = Profile::find(Auth::id());
+        $profile = Profile::where('user_id', Auth::id())->first();
+        
 
         return view('buy', compact('item','user','soldItems','profile'));
     }
