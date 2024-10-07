@@ -93,7 +93,7 @@ class ItemController extends Controller
         $item = Item::findOrFail($item_id);
         
           //支払い方法を取得
-        $paymentMethod = $request->input('payment_method');
+        $paymentMethod = $request->input('payment_method_id');
         
 
         DB::beginTransaction();
@@ -170,6 +170,7 @@ class ItemController extends Controller
     } catch (\Exception $e) {
           // エラーハンドリング
         \DB::rollBack();
+        
         \Log::error('Payment failed: ' . $e->getMessage());
         return redirect()->back()->withErrors('購入に失敗しました。もう一度お試しください。');
     }

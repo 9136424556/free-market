@@ -203,6 +203,12 @@
         form.addEventListener('submit', async function(event) {
             event.preventDefault();
 
+            // 選択された支払い方法を取得
+            var selectedPaymentMethod = document.querySelector('input[name="payment_method"]:checked').value;
+
+            // 支払い方法がカードの場合のみ、Stripeのカードエラーをチェック
+            if (selectedPaymentMethod === 'card') {
+
             // Stripeの決済処理開始
             const { error, paymentMethod } = await stripe.createPaymentMethod({
                 type: 'card',
@@ -214,13 +220,15 @@
                 return;
             }
 
-            // サーバーに送信するためのhidden inputを追加
+            // サーバーに送信するためのhidden input、payment_method_idを追加
             const hiddenInput = document.createElement('input');
             hiddenInput.setAttribute('type', 'hidden');
             hiddenInput.setAttribute('name', 'payment_method_id');
             hiddenInput.setAttribute('value', paymentMethod.id);
             form.appendChild(hiddenInput);
-
+            }
+            // カード以外の支払い方法の場合、カードエラーの要素を空にする
+            document.getElementById('card-errors').textContent = '';
             // フォームを送信してバックエンドで決済処理を実行
             form.submit();
         });
